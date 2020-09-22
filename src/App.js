@@ -15,6 +15,19 @@ import Place from './Pages/Places';
 import Navbar from "./Components/Layout/Navbar";
 
 
+// Set init data in local
+const initDataModel = {
+	
+}
+
+const initDataObject = {
+
+}
+
+const initDataPlace = {
+
+}
+
 function App() {
   return (
     <div className="App">

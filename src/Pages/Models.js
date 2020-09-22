@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 
 // Components
 import Model from '../Components/Model/Model';
+import ModelAdd from '../Components/Model/ModelAdd';
 
 // Material
 import { makeStyles } from '@material-ui/core/styles';
@@ -73,10 +74,11 @@ export default function Models() {
 
     const [models, setModel] = useState(modelInit);
 
-    let recentModelsMarkup = models.map(model => <Model key={model._id} model={model}/>)
+    let recentModelsMarkup = models.map((model, index) => <Model key={index} model={model}/>)
 
     return (
         <div className={classes.model}>
+            <ModelAdd/>
             <Grid container spacing={10}>
                 {recentModelsMarkup}
             </Grid>

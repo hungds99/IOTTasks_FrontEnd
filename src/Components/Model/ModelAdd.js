@@ -19,10 +19,13 @@ const useStyles = makeStyles({
     },
     textField: {
         marginBottom: 10
+    },
+    addBtn: {
+        marginBottom: 10
     }
   });
 
-export default function ModelEdit() {
+export default function ModelAdd() {
     const classes = useStyles();
 
     const [open, setOpen] = useState(false);
@@ -37,8 +40,8 @@ export default function ModelEdit() {
 
     return (
         <Fragment>
-            <Button size="small" color="primary" onClick={handleClickOpen}>
-                Edit
+            <Button className={classes.addBtn} variant="contained" color="primary" onClick={handleClickOpen}>
+                Add
             </Button>
 
             <Dialog
@@ -47,7 +50,7 @@ export default function ModelEdit() {
                 aria-labelledby="draggable-dialog-title"
             >
                 <DialogTitle id="draggable-dialog-title">
-                    Edit Model
+                    Add Model
                 </DialogTitle>
                 <DialogContent className={classes.dialog}>
                     <TextField className={classes.textField} name="name" label="Name" variant="outlined" defaultValue="Novotel"/>

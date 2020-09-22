@@ -1,5 +1,5 @@
 // React
-import React, { useState } from 'react';
+import React, { Fragment } from 'react';
 
 // Material
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,6 +21,7 @@ import CalendarIcon from '@material-ui/icons/DateRange';
 
 // Components
 import ModelEdit from './ModelEdit';
+import ModelRemove from './ModelRemove';
 
 const useStyles = makeStyles({
     media: {
@@ -34,16 +35,10 @@ const useStyles = makeStyles({
 export default function Model(props) {
     const classes = useStyles();
 
-    const [open, setOpen] = useState(false);
-
-    const {name, thumbnailUrl, objUrl, placeTypes, _id, createdAt, createdBy} = props.model;
+    let {name, thumbnailUrl, objUrl, placeTypes, _id, createdAt, createdBy} = props.model;
 
     let placeTypesStr = placeTypes.join(" & ");
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    
     return (
         <Grid item xs={6} sm={4}>
             <Card className={classes.card}>
@@ -83,7 +78,10 @@ export default function Model(props) {
                     </CardContent>
                 </CardActionArea>
                 <CardActions>
-                    <ModelEdit/>
+                    <Fragment>
+                        <ModelEdit/>
+                        <ModelRemove/>  
+                    </Fragment>
                 </CardActions>
             </Card>
         </Grid>
