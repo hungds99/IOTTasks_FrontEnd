@@ -3,15 +3,17 @@ import {SET_MODELS} from '../Types';
 
 import axios from 'axios';
 
-const host = 'http://localhost:8081';
+const host = 'https://localhost:44351';
 
-export const getModels = () => dispatch => {
-    axios
+export const getModels = () => {
+    return dispatch => (
+        axios
         .get(`${host}/api/models`)
         .then(res => {
+            console.log(res.data.result)
             dispatch({
                 type: SET_MODELS,
-                payload: res.data
+                payload: res.data.result
             })
         })
         .catch(err => {
@@ -19,5 +21,5 @@ export const getModels = () => dispatch => {
                 type: SET_MODELS,
                 payload: []
             })
-        }) 
+        }))
 }

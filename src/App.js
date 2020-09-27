@@ -14,35 +14,27 @@ import Place from './Pages/Places';
 // Components
 import Navbar from "./Components/Layout/Navbar";
 
-
-// Set init data in local
-const initDataModel = {
-	
-}
-
-const initDataObject = {
-
-}
-
-const initDataPlace = {
-
-}
+// Redux
+import { Provider } from 'react-redux';
+import store from './Redux/Store';
 
 function App() {
   return (
-    <div className="App">
-		<BrowserRouter>
-			<Navbar/>
-			<Container>
-				<Switch>
-					<Route path="/" component={Home} exact/>
-					<Route path="/models" component={Model}/>
-					<Route path="/objects" component={Object}/>
-					<Route path="/places" component={Place}/>
-				</Switch>
-			</Container>		
-		</BrowserRouter>
-    </div>
+	<Provider store={store}>
+		<div className="App">
+			<BrowserRouter>
+				<Navbar/>
+				<Container>
+					<Switch>
+						<Route path="/" component={Home} exact/>
+						<Route path="/models" component={Model}/>
+						<Route path="/objects" component={Object}/>
+						<Route path="/places" component={Place}/>
+					</Switch>
+				</Container>		
+			</BrowserRouter>
+		</div>
+	</Provider>
   );
 }
 
