@@ -32,7 +32,7 @@ export default function Models() {
 
     useEffect(() => {
         dispatch(getModels())
-    }, [])
+    },[])
 
     let recentModelsMarkup = models.map((model, index) => <Model key={index} model={model}/>)
 

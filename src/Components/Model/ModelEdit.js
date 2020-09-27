@@ -1,39 +1,92 @@
 // React
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from "react";
 
 // Material
-import { makeStyles } from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
+import { makeStyles } from "@material-ui/core/styles";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
 
-import Button from '@material-ui/core/Button';
+import Button from "@material-ui/core/Button";
+
+// Redux
+import { useDispatch, useSelector } from "react-redux";
+import { getModel } from "../../Redux/Actions/ModelAction";
 
 const useStyles = makeStyles({
     dialog: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-around'
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-around",
     },
     textField: {
-        marginBottom: 10
-    }
-  });
+        marginBottom: 10,
+    },
+});
 
-export default function ModelEdit() {
+export default function ModelEdit(props) {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     const [open, setOpen] = useState(false);
 
+    const modelInitEdit = useSelector((state) => state.model.model);
+
+    const modelInitState = {
+        name: '',
+        thumbnailUrl: '',
+        objUrl: '',
+        placeTypes: [],
+        createdBy: '',
+        updatedBy: ''
+    }
+
+    const [model, setModel] = useState(modelInitState);
+
+    const mapModelToState = (model) => {
+        setModel({
+            name: model.name ? model.name : '',
+            thumbnailUrl: model.thumbnailUrl ? model.thumbnailUrl : '',
+            objUrl: model.objUrl ? model.objUrl : '',
+            placeTypes: model.placeTypes ? model.placeTypes.join() : [],
+            createdBy: model.createdBy ? model.createdBy : '',
+            updatedBy: model.updatedBy ? model.updatedBy : '',
+        })
+    }
+
+    const {
+        name,
+        thumbnailUrl,
+        objUrl,
+        placeTypes,
+        createdBy,
+        updatedBy,
+    } = model;
+
+    useEffect(() => {
+        mapModelToState(modelInitEdit)
+    },[modelInitEdit])
+ 
     const handleClickOpen = () => {
+        dispatch(getModel(props.modelId));
         setOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleChange = (event) => {
+        let { name, value } = event.target;
+        if (name === "placeTypes") {
+            value = value.split(",");
+        }
+        setModel({ ...model, [name]: value });
+    };
+
+    
 
     return (
         <Fragment>
@@ -50,23 +103,69 @@ export default function ModelEdit() {
                     Edit Model
                 </DialogTitle>
                 <DialogContent className={classes.dialog}>
-                    <TextField className={classes.textField} name="name" label="Name" variant="outlined" defaultValue="Novotel"/>
-                    <TextField className={classes.textField} name="thumnailUrl" label="Thumnail Url" variant="outlined"  defaultValue="https://www.hotel24h.com.vn/data_news/bed2a6b5-b.jpg"/>
-                    <TextField className={classes.textField} name="objUrl" label="Object Url" variant="outlined" defaultValue="https://all.accor.com/asia"/>
-                    <TextField className={classes.textField} name="placeTypes" label="Place Types" variant="outlined" defaultValue="Building & Hotel"/>
-                    <TextField className={classes.textField} name="createdBy" label="Created By" variant="outlined" defaultValue="Hung Dinh" disabled/>
-                    <TextField className={classes.textField} name="updatedBy" label="Updated By" variant="outlined" defaultValue="Hung Dinh"/>
+                    <TextField
+                        className={classes.textField}
+                        type="text"
+                        name="name"
+                        label="Name"
+                        value={name}
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        className={classes.textField}
+                        type="text"
+                        name="thumbnailUrl"
+                        label="Thumnail Url"
+                        value={thumbnailUrl}
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        className={classes.textField}
+                        type="text"
+                        name="objUrl"
+                        label="Object Url"
+                        value={objUrl}
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        className={classes.textField}
+                        type="text"
+                        name="placeTypes"
+                        label="Place Types"
+                        // value={
+                        //     placeTypes === null || placeTypes === undefined
+                        //         ? ""
+                        //         : placeTypes.join()
+                        // }
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        className={classes.textField}
+                        type="text"
+                        name="createdBy"
+                        label="Created By"
+                        value={createdBy}
+                        onChange={handleChange}
+                        disabled
+                    />
+                    <TextField
+                        className={classes.textField}
+                        type="text"
+                        name="updatedBy"
+                        label="Updated By"
+                        value={updatedBy}
+                        onChange={handleChange}
+                    />
                 </DialogContent>
                 <DialogActions>
-                <Button autoFocus onClick={handleClose} color="primary">
-                    Cancel
-                </Button>
-                <Button onClick={handleClose} color="primary">
-                    Accept
-                </Button>
+                    <Button autoFocus onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleClose} color="primary">
+                        Update
+                    </Button>
                 </DialogActions>
             </Dialog>
         </Fragment>
-   
-    )
+    );
 }
