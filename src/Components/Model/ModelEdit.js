@@ -160,10 +160,10 @@ export default function ModelEdit(props) {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleClose} color="primary">
+                    <Button onClick={handleClose} variant="contained" color="secondary">
                         Cancel
                     </Button>
-                    <Button onClick={handleSubmit} color="primary">
+                    <Button onClick={handleSubmit} variant="contained" color="primary">
                         Update
                     </Button>
                 </DialogActions>

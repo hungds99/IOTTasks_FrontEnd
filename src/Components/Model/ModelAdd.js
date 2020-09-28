@@ -1,7 +1,6 @@
 // React
 import React, { Fragment, useState } from "react";
 
-
 // Material
 import { makeStyles } from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
@@ -21,14 +20,14 @@ const useStyles = makeStyles({
     dialog: {
         display: "flex",
         flexWrap: "wrap",
-        justifyContent: "space-around",
+        justifyContent: "space-around"
     },
     textField: {
-        marginBottom: 10,
+        marginBottom: 30
     },
     addBtn: {
-        marginBottom: 10,
-    },
+        marginBottom: 10
+    }
 });
 
 export default function ModelAdd() {
@@ -39,11 +38,12 @@ export default function ModelAdd() {
         name: "",
         thumbnailUrl: "",
         objUrl: "",
-        placeTypes: [],
-        createdBy: "",
+        placeTypes: "",
+        createdBy: ""
     };
 
     const [model, setModel] = useState(initModel);
+    const [error, setError] = useState({});
 
     const [open, setOpen] = useState(false);
 
@@ -57,15 +57,23 @@ export default function ModelAdd() {
 
     const handleChange = (event) => {
         let { name, value } = event.target;
-        if(name === 'placeTypes') {
-            value = value.split(',');
+        if(value === '') {
+            setError({
+                ...error,
+                [name]: "This field is not empty required !",
+            })
+        } else {
+            setError({
+                ...error,
+                [name]: "",
+            })
         }
         setModel({ ...model, [name]: value });
-    };
+    };  
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(addModel(model));
+        dispatch(addModel({...model, placeTypes: model.placeTypes.split(",")}));
         setModel(initModel);
         handleClose();
     };
@@ -94,6 +102,8 @@ export default function ModelAdd() {
                         label="Name"
                         variant="outlined"
                         value={model.name}
+                        error={error.name ? true : false}
+                        helperText={error.name}
                         onChange={handleChange}
                     />
                     <TextField
@@ -102,6 +112,8 @@ export default function ModelAdd() {
                         label="Thumnail Url"
                         variant="outlined"
                         value={model.thumnailUrl}
+                        error={error.thumbnailUrl ? true : false}
+                        helperText={error.thumbnailUrl}
                         onChange={handleChange}
                     />
                     <TextField
@@ -110,6 +122,8 @@ export default function ModelAdd() {
                         label="Object Url"
                         variant="outlined"
                         value={model.objUrl}
+                        error={error.objUrl ? true : false}
+                        helperText={error.objUrl}
                         onChange={handleChange}
                     />
                     <TextField
@@ -117,7 +131,9 @@ export default function ModelAdd() {
                         name="placeTypes"
                         label="Place Types"
                         variant="outlined"
-                        value={model.placeTypes.join()}
+                        value={model.placeTypes}
+                        error={error.placeTypes ? true : false}
+                        helperText={error.placeTypes}
                         onChange={handleChange}
                     />
                     <TextField
@@ -126,6 +142,8 @@ export default function ModelAdd() {
                         label="Created By"
                         variant="outlined"
                         value={model.createdBy}
+                        error={error.createdBy ? true : false}
+                        helperText={error.createdBy}
                         onChange={handleChange}
                     />
                     <TextField
@@ -137,10 +155,10 @@ export default function ModelAdd() {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleClose} color="primary">
+                    <Button onClick={handleClose} variant="contained" color="secondary">
                         Cancel
                     </Button>
-                    <Button onClick={handleSubmit} color="primary">
+                    <Button onClick={handleSubmit} variant="contained" color="primary">
                         Submit
                     </Button>
                 </DialogActions>

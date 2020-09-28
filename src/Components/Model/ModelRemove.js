@@ -54,11 +54,11 @@ export default function ModelRemove(props) {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button autoFocus onClick={handleClose} color="primary">
+                    <Button onClick={handleClose} variant="contained" color="secondary">
                         Cancel
                     </Button>
-                    <Button onClick={handleDelete} color="primary">
-                        Accept
+                    <Button onClick={handleDelete} variant="contained" color="primary">
+                        Remove
                     </Button>
                 </DialogActions>
             </Dialog>

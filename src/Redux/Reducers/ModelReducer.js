@@ -1,6 +1,6 @@
 import {
-    SET_MODELS,
-    SET_MODEL,
+    FETCH_MODELS,
+    FETCH_MODEL,
     ADD_MODEL,
     EDIT_MODEL,
     REMOVE_MODEL
@@ -13,7 +13,7 @@ const initialModel = {
 
 export default function(state = initialModel, actions) {
     switch (actions.type) {
-        case SET_MODELS:
+        case FETCH_MODELS:
             return {
                 ...state,
                 models: actions.payload
@@ -23,7 +23,7 @@ export default function(state = initialModel, actions) {
                 ...state,
                 models: [...state.models, actions.payload]
             };
-        case SET_MODEL:
+        case FETCH_MODEL:
             return {
                 ...state,
                 model: actions.payload

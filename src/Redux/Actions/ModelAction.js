@@ -1,10 +1,12 @@
 // Action types
 import {
-    SET_MODELS,
-    SET_MODEL,
+    FETCH_MODELS,
+    FETCH_MODEL,
     ADD_MODEL,
     EDIT_MODEL,
-    REMOVE_MODEL
+    REMOVE_MODEL,
+    LOADING_UI,
+    STOP_LOADING_UI
 } from "../Types";
 
 import axios from "axios";
@@ -12,22 +14,29 @@ import axios from "axios";
 const host = "http://localhost:8081";
 
 export const getModels = () => {
-    return dispatch =>
+    return dispatch => {
+        dispatch({
+            type: LOADING_UI
+        });
         axios
             .get(`${host}/api/models`)
             .then(res => {
                 console.log(res.data.result);
                 dispatch({
-                    type: SET_MODELS,
+                    type: FETCH_MODELS,
                     payload: res.data.result
+                });
+                dispatch({
+                    type: STOP_LOADING_UI
                 });
             })
             .catch(err => {
                 dispatch({
-                    type: SET_MODELS,
+                    type: FETCH_MODELS,
                     payload: []
                 });
             });
+    };
 };
 
 export const addModel = newModel => {
@@ -53,7 +62,7 @@ export const getModel = modelId => {
             .then(res => {
                 console.log(res.data.result);
                 dispatch({
-                    type: SET_MODEL,
+                    type: FETCH_MODEL,
                     payload: res.data.result
                 });
             })
