@@ -25,11 +25,11 @@ import ModelRemove from "./ModelRemove";
 
 const useStyles = makeStyles({
     media: {
-        height: 140,
+        height: 140
     },
     card: {
-        maxWidth: 345,
-    },
+        maxWidth: 345
+    }
 });
 
 export default function Model(props) {
@@ -42,7 +42,7 @@ export default function Model(props) {
         placeTypes,
         _id,
         createdAt,
-        createdBy,
+        createdBy
     } = props.model;
 
     let placeTypesStr = placeTypes.join(",");
@@ -85,7 +85,7 @@ export default function Model(props) {
                 <CardActions>
                     <Fragment>
                         <ModelEdit modelId={_id} />
-                        <ModelRemove />
+                        <ModelRemove modelId={_id} />
                     </Fragment>
                 </CardActions>
             </Card>

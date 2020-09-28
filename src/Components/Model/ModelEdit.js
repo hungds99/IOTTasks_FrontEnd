@@ -13,7 +13,7 @@ import Button from "@material-ui/core/Button";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
-import { getModel } from "../../Redux/Actions/ModelAction";
+import { getModel, editModel } from "../../Redux/Actions/ModelAction";
 
 const useStyles = makeStyles({
     dialog: {
@@ -35,10 +35,11 @@ export default function ModelEdit(props) {
     const modelInitEdit = useSelector((state) => state.model.model);
 
     const modelInitState = {
+        _id: '',
         name: '',
         thumbnailUrl: '',
         objUrl: '',
-        placeTypes: [],
+        placeTypes: '',
         createdBy: '',
         updatedBy: ''
     }
@@ -47,10 +48,11 @@ export default function ModelEdit(props) {
 
     const mapModelToState = (model) => {
         setModel({
+            _id: model._id ? model._id : '',
             name: model.name ? model.name : '',
             thumbnailUrl: model.thumbnailUrl ? model.thumbnailUrl : '',
             objUrl: model.objUrl ? model.objUrl : '',
-            placeTypes: model.placeTypes ? model.placeTypes.join() : [],
+            placeTypes: model.placeTypes ? model.placeTypes.join() : '',
             createdBy: model.createdBy ? model.createdBy : '',
             updatedBy: model.updatedBy ? model.updatedBy : '',
         })
@@ -80,13 +82,15 @@ export default function ModelEdit(props) {
 
     const handleChange = (event) => {
         let { name, value } = event.target;
-        if (name === "placeTypes") {
-            value = value.split(",");
-        }
         setModel({ ...model, [name]: value });
     };
 
-    
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        dispatch(editModel({...model, placeTypes: model.placeTypes.split(",")}));
+        setModel(modelInitState);
+        handleClose();
+    }
 
     return (
         <Fragment>
@@ -132,11 +136,9 @@ export default function ModelEdit(props) {
                         type="text"
                         name="placeTypes"
                         label="Place Types"
-                        // value={
-                        //     placeTypes === null || placeTypes === undefined
-                        //         ? ""
-                        //         : placeTypes.join()
-                        // }
+                        value={
+                            placeTypes
+                        }
                         onChange={handleChange}
                     />
                     <TextField
@@ -161,7 +163,7 @@ export default function ModelEdit(props) {
                     <Button autoFocus onClick={handleClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleClose} color="primary">
+                    <Button onClick={handleSubmit} color="primary">
                         Update
                     </Button>
                 </DialogActions>
