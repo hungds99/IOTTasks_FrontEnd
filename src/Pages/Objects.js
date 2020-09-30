@@ -11,15 +11,16 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import SearchIcon from "@material-ui/icons/Search";
 import Pagination from "@material-ui/lab/Pagination";
-import Button from "@material-ui/core/Button";
 import InputBase from "@material-ui/core/InputBase";
 import Paper from "@material-ui/core/Paper";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 
 // Component
 import Object from "../Components/Object/Object";
+import ObjectAdd from "../Components/Object/ObjectAdd";
 import { getObjects } from "../Redux/Actions/ObjectAction";
 
 const useStyles = makeStyles(theme => ({
@@ -81,72 +82,85 @@ const useStyles = makeStyles(theme => ({
         [theme.breakpoints.up("md")]: {
             width: "20ch"
         }
+    },
+    loading: {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "50vh"
     }
 }));
 
 export default function Objects() {
     const classes = useStyles();
-
     const dispatch = useDispatch();
+
     const { objects } = useSelector(state => state.object);
+    const { loading } = useSelector(state => state.ui);
     const [page, setPage] = useState(1);
 
     useEffect(() => {
         dispatch(getObjects(page));
-    }, [page]);
+    }, [page, dispatch]);
 
     const changePage = (event, value) => {
         setPage(value);
     };
 
-    let recentObjectsMarkup = objects.map((object, index) => (
+    const recentObjectsMarkup = objects.map((object, index) => (
         <Object key={index} object={object} count={index} />
     ));
 
     return (
         <div className={classes.object}>
-            <TableContainer component={Paper}>
-                <div className={classes.action}>
-                    <Button className={classes.addBtn} variant="contained" color="primary">
-                        Add
-                    </Button>
-                    <div className={classes.search}>
-                        <div className={classes.searchIcon}>
-                            <SearchIcon />
-                        </div>
-                        <InputBase
-                            placeholder="Search…"
-                            classes={{
-                                root: classes.inputRoot,
-                                input: classes.inputInput
-                            }}
-                            inputProps={{ "aria-label": "search" }}
-                        />
-                    </div>
+            {loading ? (
+                <div className={classes.loading}>
+                    <CircularProgress />
                 </div>
-                <Table className={classes.table} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="center">ID</TableCell>
-                            <TableCell align="center">Name</TableCell>
-                            <TableCell align="center">Location</TableCell>
-                            <TableCell align="center">Description</TableCell>
-                            <TableCell align="center">CreatedBy</TableCell>
-                            <TableCell align="center">CreatedAt</TableCell>
-                            <TableCell align="center">UpdatedAt</TableCell>
-                            <TableCell align="center">Action</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>{recentObjectsMarkup}</TableBody>
-                </Table>
-                <Pagination
-                    className={classes.pagination}
-                    count={20}
-                    color="primary"
-                    page={page}
-                    onChange={changePage}
-                />
-            </TableContainer>
+            ) : (
+                <TableContainer component={Paper}>
+                    <div className={classes.action}>
+                        <ObjectAdd />
+                        <div className={classes.search}>
+                            <div className={classes.searchIcon}>
+                                <SearchIcon />
+                            </div>
+                            <InputBase
+                                placeholder="Search…"
+                                classes={{
+                                    root: classes.inputRoot,
+                                    input: classes.inputInput
+                                }}
+                                inputProps={{ "aria-label": "search" }}
+                            />
+                        </div>
+                    </div>
+                    <Table className={classes.table} aria-label="simple table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell align="center">ID</TableCell>
+                                <TableCell align="center">Name</TableCell>
+                                <TableCell align="center">Location</TableCell>
+                                <TableCell align="center">
+                                    Description
+                                </TableCell>
+                                <TableCell align="center">CreatedBy</TableCell>
+                                <TableCell align="center">CreatedAt</TableCell>
+                                <TableCell align="center">UpdatedAt</TableCell>
+                                <TableCell align="center">Action</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>{recentObjectsMarkup}</TableBody>
+                    </Table>
+                    <Pagination
+                        className={classes.pagination}
+                        count={20}
+                        color="primary"
+                        page={page}
+                        onChange={changePage}
+                    />
+                </TableContainer>
+            )}
         </div>
     );
 }

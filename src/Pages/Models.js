@@ -8,7 +8,6 @@ import ModelAdd from "../Components/Model/ModelAdd";
 // Material
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
-import Alert from "@material-ui/lab/Alert";
 import Pagination from "@material-ui/lab/Pagination";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -55,7 +54,7 @@ export default function Models() {
 
     useEffect(() => {
         dispatch(getModels());
-    }, []);
+    }, [dispatch]);
 
     const changePage = event => {
         setCurrentPage(parseInt(event.target.textContent));

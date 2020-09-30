@@ -47,7 +47,7 @@ export default function ModelAdd() {
 
     const [open, setOpen] = useState(false);
 
-    const handleClickOpen = () => {
+    const handleOpen = () => {
         setOpen(true);
     };
 
@@ -84,7 +84,7 @@ export default function ModelAdd() {
                 className={classes.addBtn}
                 variant="contained"
                 color="primary"
-                onClick={handleClickOpen}
+                onClick={handleOpen}
             >
                 Add
             </Button>
