@@ -15,8 +15,8 @@ import Button from "@material-ui/core/Button";
 import Edit from "@material-ui/icons/Edit";
 
 // Redux
-import { useDispatch, useSelector } from "react-redux";
-import { getObject, editObject } from "../../Redux/Actions/ObjectAction";
+import { useDispatch } from "react-redux";
+import { editObject } from "../../Redux/Actions/ObjectAction";
 
 const useStyles = makeStyles({
     dialog: {
@@ -36,45 +36,12 @@ export default function ObjectEdit(props) {
 
     const [open, setOpen] = useState(false);
 
-    // const objectInitEdit = useSelector(state => state.object.object);
-
-    // const objectInitState = {
-    //     _id: "",
-    //     name: "",
-    //     lng: "",
-    //     lat: "",
-    //     description: "",
-    //     createdBy: "",
-    //     updatedBy: "",
-    //     location: {
-    //         lng: "",
-    //         lat: ""
-    //     }
-    // };
-
     const [object, setObject] = useState(props.object);
-
-    // const mapObjectToState = object => {
-    //     setObject({
-    //         _id: object._id ? object._id : "",
-    //         name: object.name ? object.name : "",
-    //         lng: object.location.lng ? object.location.lng : "",
-    //         lat: object.location.lat ? object.location.lat : "",
-    //         description: object.description ? object.description : "",
-    //         createdBy: object.createdBy ? object.createdBy : "",
-    //         updatedBy: object.updatedBy ? object.updatedBy : ""
-    //     });
-    // };
 
     const { name, location, description, createdBy, updatedBy } = object;
     const { lng, lat } = location;
 
-    // useEffect(() => {
-    //     mapObjectToState(objectInitEdit);
-    // }, [objectInitEdit]);
-
     const handleClickOpen = () => {
-        // dispatch(getObject(props.objectId));
         setOpen(true);
     };
 
@@ -90,7 +57,6 @@ export default function ObjectEdit(props) {
     const handleSubmit = event => {
         event.preventDefault();
         dispatch(editObject({ ...object }));
-        // setObject(objectInitState);
         handleClose();
     };
 

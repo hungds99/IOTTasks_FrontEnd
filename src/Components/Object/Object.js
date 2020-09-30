@@ -12,6 +12,7 @@ import Delete from "@material-ui/icons/Delete";
 
 // Component
 import ObjectEdit from "../Object/ObjectEdit";
+import ObjectRemove from "../Object/ObjectRemove";
 
 export default function Object(props) {
     const {
@@ -35,12 +36,7 @@ export default function Object(props) {
             <TableCell align="center">{updatedAt}</TableCell>
             <TableCell align="center">
                 <ObjectEdit objectId={_id} object={props.object} />
-
-                <Tooltip title="Delete">
-                    <IconButton aria-label="delete">
-                        <Delete color="secondary" />
-                    </IconButton>
-                </Tooltip>
+                <ObjectRemove object={props.object} />
             </TableCell>
         </TableRow>
     );

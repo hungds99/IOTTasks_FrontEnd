@@ -5,7 +5,8 @@ import {
     LOADING_UI,
     STOP_LOADING_UI,
     ADD_OBJECT,
-    EDIT_OBJECT
+    EDIT_OBJECT,
+    REMOVE_OBJECT
 } from "../Types";
 
 import axios from "axios";
@@ -69,4 +70,19 @@ export const editObject = object => {
                 });
             })
             .catch(err => console.log(err));
+};
+
+export const removeObject = objectId => {
+    return dispatch => {
+        axios
+            .delete(`${host}/api/objects/${objectId}`)
+            .then(res => {
+                console.log(res.data.result);
+                dispatch({
+                    type: REMOVE_OBJECT,
+                    payload: objectId
+                });
+            })
+            .catch(err => console.log(err));
+    };
 };

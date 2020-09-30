@@ -1,5 +1,11 @@
 // Redux types
-import { FETCH_OBJECTS, FETCH_OBJECT, ADD_OBJECT, EDIT_OBJECT } from "../Types";
+import {
+    FETCH_OBJECTS,
+    FETCH_OBJECT,
+    ADD_OBJECT,
+    EDIT_OBJECT,
+    REMOVE_OBJECT
+} from "../Types";
 
 const initialObject = {
     objects: [],
@@ -32,7 +38,15 @@ export default function(state = initialObject, actions) {
                 objects: [...state.objects],
                 object: {}
             };
-
+        case REMOVE_OBJECT:
+            let indexRemove = state.objects.findIndex(
+                object => object._id === actions.payload.objectId
+            );
+            state.objects.splice(indexRemove, 1);
+            return {
+                objects: [...state.objects],
+                object: {}
+            };
         default:
             return state;
     }

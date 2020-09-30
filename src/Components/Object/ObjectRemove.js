@@ -7,22 +7,24 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import Typography from "@material-ui/core/Typography";
-
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
+import Delete from "@material-ui/icons/Delete";
 
 // Redux
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { getModel, removeModel } from "../../Redux/Actions/ModelAction";
+import { removeObject } from "../../Redux/Actions/ObjectAction";
 
-export default function ModelRemove(props) {
+export default function ObjectRemove(props) {
     const [open, setOpen] = useState(false);
     const dispatch = useDispatch();
-    const { _id, name } = useSelector(state => state.model.model);
 
-    const handleClickOpen = () => {
+    const { _id, name } = props.object;
+
+    const handleOpen = () => {
         setOpen(true);
-        dispatch(getModel(props.modelId));
     };
 
     const handleClose = () => {
@@ -30,16 +32,17 @@ export default function ModelRemove(props) {
     };
 
     const handleDelete = event => {
-        event.preventDefault();
-        dispatch(removeModel(_id));
+        dispatch(removeObject(_id));
         handleClose();
     };
 
     return (
         <Fragment>
-            <Button size="small" color="secondary" onClick={handleClickOpen}>
-                Remove
-            </Button>
+            <Tooltip title="Delete">
+                <IconButton aria-label="delete" onClick={handleOpen}>
+                    <Delete color="secondary" />
+                </IconButton>
+            </Tooltip>
 
             <Dialog
                 open={open}
