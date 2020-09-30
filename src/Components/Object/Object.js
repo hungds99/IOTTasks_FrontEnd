@@ -4,11 +4,6 @@ import React from "react";
 // Material
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
-
-import Edit from "@material-ui/icons/Edit";
-import Delete from "@material-ui/icons/Delete";
 
 // Component
 import ObjectEdit from "../Object/ObjectEdit";

@@ -1,5 +1,6 @@
 // React
 import React, { Fragment, useState } from "react";
+import { Link } from "react-router-dom";
 
 // Material
 import { makeStyles } from "@material-ui/core/styles";
@@ -65,6 +66,8 @@ export default function ObjectAdd() {
                 variant="contained"
                 color="primary"
                 onClick={handleOpen}
+                component={Link}
+                to={`/objects/create`}
             >
                 Add
             </Button>

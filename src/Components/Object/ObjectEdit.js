@@ -1,5 +1,5 @@
 // React
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState} from "react";
 
 // Material
 import { makeStyles } from "@material-ui/core/styles";
@@ -74,7 +74,7 @@ export default function ObjectEdit(props) {
                 aria-labelledby="draggable-dialog-title"
             >
                 <DialogTitle id="draggable-dialog-title">
-                    Edit Model
+                    Edit Object
                 </DialogTitle>
                 <DialogContent className={classes.dialog}>
                     <TextField
