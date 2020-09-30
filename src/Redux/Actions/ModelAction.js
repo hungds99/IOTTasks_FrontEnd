@@ -6,7 +6,8 @@ import {
     EDIT_MODEL,
     REMOVE_MODEL,
     LOADING_UI,
-    STOP_LOADING_UI
+    STOP_LOADING_UI,
+    SET_ERRORS
 } from "../Types";
 
 import axios from "axios";
@@ -15,9 +16,7 @@ const host = "http://localhost:8081";
 
 export const getModels = () => {
     return dispatch => {
-        dispatch({
-            type: LOADING_UI
-        });
+        dispatch({ type: LOADING_UI });
         axios
             .get(`${host}/api/models`)
             .then(res => {
@@ -26,14 +25,12 @@ export const getModels = () => {
                     type: FETCH_MODELS,
                     payload: res.data.result
                 });
-                dispatch({
-                    type: STOP_LOADING_UI
-                });
+                dispatch({ type: STOP_LOADING_UI });
             })
             .catch(err => {
                 dispatch({
-                    type: FETCH_MODELS,
-                    payload: []
+                    type: SET_ERRORS,
+                    payload: err
                 });
             });
     };

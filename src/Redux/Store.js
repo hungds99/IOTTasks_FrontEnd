@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 // Reducer
 import modelReducer from './Reducers/ModelReducer';
 import uiReducer from './Reducers/UIReducer';
+import objectReducer from './Reducers/ObjectReducer';
 
 
 const initialSate = {}
@@ -13,6 +14,7 @@ const middleware = [thunk]
 
 const reducers = combineReducers({
     model: modelReducer,
+    object: objectReducer,
     ui: uiReducer
 })
 
