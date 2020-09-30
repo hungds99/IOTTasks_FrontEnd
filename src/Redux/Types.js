@@ -8,6 +8,10 @@ export const REMOVE_MODEL = "REMOVE_MODEL";
 
 // Object reducer types
 export const FETCH_OBJECTS = "FETCH_OBJECTS";
+export const FETCH_OBJECT = "FETCH_OBJECT";
+export const ADD_OBJECT = "ADD_OBJECT";
+export const EDIT_OBJECT = "EDIT_OBJECT";
+export const REMOVE_OBJECT = "REMOVE_OBJECT";
 
 // UI reducer types
 export const LOADING_UI = "LOADING_UI";

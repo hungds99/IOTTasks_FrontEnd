@@ -1,24 +1,24 @@
 // React
-import React from 'react';
+import React from "react";
 import { Link } from "react-router-dom";
 
 // Material
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from "@material-ui/core/styles";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
-import { Grid } from '@material-ui/core';
+import { Grid } from "@material-ui/core";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
     root: {
-      flexGrow: 1,
+        flexGrow: 1
     },
     menuButton: {
-      marginRight: theme.spacing(2),
-    },
-  }));
+        marginRight: theme.spacing(2)
+    }
+}));
 
 export default function Navbar() {
     const classes = useStyles();
@@ -26,8 +26,12 @@ export default function Navbar() {
     return (
         <AppBar position="static">
             <Toolbar variant="dense">
-                <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                </IconButton>
+                <IconButton
+                    edge="start"
+                    className={classes.menuButton}
+                    color="inherit"
+                    aria-label="menu"
+                ></IconButton>
                 <Typography variant="h6" color="inherit">
                     IOTTASKS
                 </Typography>
@@ -44,14 +48,14 @@ export default function Navbar() {
                     <Button color="inherit" component={Link} to="/models">
                         Model
                     </Button>
-                    <Button color="inherit" component={Link} to="/Objects">
+                    <Button color="inherit" component={Link} to="/objects">
                         Object
                     </Button>
-                    <Button color="inherit" component={Link} to="/Places">
+                    <Button color="inherit" component={Link} to="/places">
                         Place
                     </Button>
                 </Grid>
             </Toolbar>
         </AppBar>
-    )
+    );
 }

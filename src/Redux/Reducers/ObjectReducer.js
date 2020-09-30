@@ -1,5 +1,5 @@
 // Redux types
-import { FETCH_OBJECTS } from "../Types";
+import { FETCH_OBJECTS, FETCH_OBJECT, ADD_OBJECT, EDIT_OBJECT } from "../Types";
 
 const initialObject = {
     objects: [],
@@ -12,6 +12,25 @@ export default function(state = initialObject, actions) {
             return {
                 ...state,
                 objects: actions.payload
+            };
+        case FETCH_OBJECT:
+            return {
+                ...state,
+                object: actions.payload
+            };
+        case ADD_OBJECT:
+            return {
+                ...state,
+                objects: [actions.payload, ...state.objects]
+            };
+        case EDIT_OBJECT:
+            let indexEDit = state.objects.findIndex(
+                object => object._id === actions.payload._id
+            );
+            state.objects[indexEDit] = actions.payload;
+            return {
+                objects: [...state.objects],
+                object: {}
             };
 
         default:

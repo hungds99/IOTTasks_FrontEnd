@@ -55,25 +55,27 @@ export default function ModelAdd() {
         setOpen(false);
     };
 
-    const handleChange = (event) => {
+    const handleChange = event => {
         let { name, value } = event.target;
-        if(value === '') {
+        if (value === "") {
             setError({
                 ...error,
-                [name]: "This field is not empty required !",
-            })
+                [name]: "This field is not empty required !"
+            });
         } else {
             setError({
                 ...error,
-                [name]: "",
-            })
+                [name]: ""
+            });
         }
         setModel({ ...model, [name]: value });
-    };  
+    };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = event => {
         event.preventDefault();
-        dispatch(addModel({...model, placeTypes: model.placeTypes.split(",")}));
+        dispatch(
+            addModel({ ...model, placeTypes: model.placeTypes.split(",") })
+        );
         setModel(initModel);
         handleClose();
     };
@@ -155,10 +157,18 @@ export default function ModelAdd() {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} variant="contained" color="secondary">
+                    <Button
+                        onClick={handleClose}
+                        variant="contained"
+                        color="secondary"
+                    >
                         Cancel
                     </Button>
-                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                    <Button
+                        onClick={handleSubmit}
+                        variant="contained"
+                        color="primary"
+                    >
                         Submit
                     </Button>
                 </DialogActions>

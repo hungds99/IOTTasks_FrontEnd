@@ -19,11 +19,11 @@ const useStyles = makeStyles({
     dialog: {
         display: "flex",
         flexWrap: "wrap",
-        justifyContent: "space-around",
+        justifyContent: "space-around"
     },
     textField: {
-        marginBottom: 10,
-    },
+        marginBottom: 10
+    }
 });
 
 export default function ModelEdit(props) {
@@ -32,31 +32,33 @@ export default function ModelEdit(props) {
 
     const [open, setOpen] = useState(false);
 
-    const modelInitEdit = useSelector((state) => state.model.model);
+    const modelInitEdit = useSelector(state => state.model.model);
 
     const modelInitState = {
-        _id: '',
-        name: '',
-        thumbnailUrl: '',
-        objUrl: '',
-        placeTypes: '',
-        createdBy: '',
-        updatedBy: ''
-    }
+        _id: "",
+        name: "",
+        thumbnailUrl: "",
+        objUrl: "",
+        placeTypes: "",
+        createdBy: "",
+        updatedBy: ""
+    };
 
     const [model, setModel] = useState(modelInitState);
 
-    const mapModelToState = (model) => {
+    const mapModelToState = model => {
+        console.log(model);
+
         setModel({
-            _id: model._id ? model._id : '',
-            name: model.name ? model.name : '',
-            thumbnailUrl: model.thumbnailUrl ? model.thumbnailUrl : '',
-            objUrl: model.objUrl ? model.objUrl : '',
-            placeTypes: model.placeTypes ? model.placeTypes.join() : '',
-            createdBy: model.createdBy ? model.createdBy : '',
-            updatedBy: model.updatedBy ? model.updatedBy : '',
-        })
-    }
+            _id: model._id ? model._id : "",
+            name: model.name ? model.name : "",
+            thumbnailUrl: model.thumbnailUrl ? model.thumbnailUrl : "",
+            objUrl: model.objUrl ? model.objUrl : "",
+            placeTypes: model.placeTypes ? model.placeTypes.join() : "",
+            createdBy: model.createdBy ? model.createdBy : "",
+            updatedBy: model.updatedBy ? model.updatedBy : ""
+        });
+    };
 
     const {
         name,
@@ -64,13 +66,13 @@ export default function ModelEdit(props) {
         objUrl,
         placeTypes,
         createdBy,
-        updatedBy,
+        updatedBy
     } = model;
 
     useEffect(() => {
-        mapModelToState(modelInitEdit)
-    },[modelInitEdit])
- 
+        mapModelToState(modelInitEdit);
+    }, [modelInitEdit]);
+
     const handleClickOpen = () => {
         dispatch(getModel(props.modelId));
         setOpen(true);
@@ -80,17 +82,19 @@ export default function ModelEdit(props) {
         setOpen(false);
     };
 
-    const handleChange = (event) => {
+    const handleChange = event => {
         let { name, value } = event.target;
         setModel({ ...model, [name]: value });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = event => {
         event.preventDefault();
-        dispatch(editModel({...model, placeTypes: model.placeTypes.split(",")}));
+        dispatch(
+            editModel({ ...model, placeTypes: model.placeTypes.split(",") })
+        );
         setModel(modelInitState);
         handleClose();
-    }
+    };
 
     return (
         <Fragment>
@@ -136,9 +140,7 @@ export default function ModelEdit(props) {
                         type="text"
                         name="placeTypes"
                         label="Place Types"
-                        value={
-                            placeTypes
-                        }
+                        value={placeTypes}
                         onChange={handleChange}
                     />
                     <TextField
@@ -160,10 +162,18 @@ export default function ModelEdit(props) {
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} variant="contained" color="secondary">
+                    <Button
+                        onClick={handleClose}
+                        variant="contained"
+                        color="secondary"
+                    >
                         Cancel
                     </Button>
-                    <Button onClick={handleSubmit} variant="contained" color="primary">
+                    <Button
+                        onClick={handleSubmit}
+                        variant="contained"
+                        color="primary"
+                    >
                         Update
                     </Button>
                 </DialogActions>

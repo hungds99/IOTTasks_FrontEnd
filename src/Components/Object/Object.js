@@ -10,6 +10,9 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Edit from "@material-ui/icons/Edit";
 import Delete from "@material-ui/icons/Delete";
 
+// Component
+import ObjectEdit from "../Object/ObjectEdit";
+
 export default function Object(props) {
     const {
         _id,
@@ -31,11 +34,7 @@ export default function Object(props) {
             <TableCell align="center">{createdAt}</TableCell>
             <TableCell align="center">{updatedAt}</TableCell>
             <TableCell align="center">
-                <Tooltip title="Edit">
-                    <IconButton aria-label="edit">
-                        <Edit color="primary" />
-                    </IconButton>
-                </Tooltip>
+                <ObjectEdit objectId={_id} object={props.object} />
 
                 <Tooltip title="Delete">
                     <IconButton aria-label="delete">

@@ -1,47 +1,80 @@
 // React
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 
 // Material
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
+import IconButton from "@material-ui/core/IconButton";
+import Tooltip from "@material-ui/core/Tooltip";
+import Button from "@material-ui/core/Button";
+
+import Edit from "@material-ui/icons/Edit";
 
 // Redux
-import { useDispatch } from "react-redux";
-import { addObject } from "../../Redux/Actions/ObjectAction";
+import { useDispatch, useSelector } from "react-redux";
+import { getObject, editObject } from "../../Redux/Actions/ObjectAction";
 
-const useStyles = makeStyles(theme => ({
-    addBtn: {
-        marginLeft: 25
+const useStyles = makeStyles({
+    dialog: {
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-around"
     },
     textField: {
         width: "100%",
         marginBottom: 20
     }
-}));
+});
 
-export default function ObjectAdd() {
+export default function ObjectEdit(props) {
     const classes = useStyles();
     const dispatch = useDispatch();
 
     const [open, setOpen] = useState(false);
 
-    const initObject = {
-        lng: "",
-        lat: "",
-        name: "",
-        description: "",
-        createdBy: ""
-    };
-    const [object, setObject] = useState(initObject);
+    // const objectInitEdit = useSelector(state => state.object.object);
 
-    const { name, lng, lat, description, createdBy } = object;
+    // const objectInitState = {
+    //     _id: "",
+    //     name: "",
+    //     lng: "",
+    //     lat: "",
+    //     description: "",
+    //     createdBy: "",
+    //     updatedBy: "",
+    //     location: {
+    //         lng: "",
+    //         lat: ""
+    //     }
+    // };
 
-    const handleOpen = () => {
+    const [object, setObject] = useState(props.object);
+
+    // const mapObjectToState = object => {
+    //     setObject({
+    //         _id: object._id ? object._id : "",
+    //         name: object.name ? object.name : "",
+    //         lng: object.location.lng ? object.location.lng : "",
+    //         lat: object.location.lat ? object.location.lat : "",
+    //         description: object.description ? object.description : "",
+    //         createdBy: object.createdBy ? object.createdBy : "",
+    //         updatedBy: object.updatedBy ? object.updatedBy : ""
+    //     });
+    // };
+
+    const { name, location, description, createdBy, updatedBy } = object;
+    const { lng, lat } = location;
+
+    // useEffect(() => {
+    //     mapObjectToState(objectInitEdit);
+    // }, [objectInitEdit]);
+
+    const handleClickOpen = () => {
+        // dispatch(getObject(props.objectId));
         setOpen(true);
     };
 
@@ -51,30 +84,31 @@ export default function ObjectAdd() {
 
     const handleChange = event => {
         let { name, value } = event.target;
-        setObject({ ...object, [name]: value });
+        setObject(state => ({ ...state.object, [name]: value }));
     };
 
-    const handleSubmit = () => {
-        dispatch(addObject(object));
+    const handleSubmit = event => {
+        event.preventDefault();
+        dispatch(editObject({ ...object }));
+        // setObject(objectInitState);
+        handleClose();
     };
 
     return (
         <Fragment>
-            <Button
-                className={classes.addBtn}
-                variant="contained"
-                color="primary"
-                onClick={handleOpen}
-            >
-                Add
-            </Button>
+            <Tooltip title="Edit">
+                <IconButton aria-label="edit" onClick={handleClickOpen}>
+                    <Edit color="primary" />
+                </IconButton>
+            </Tooltip>
+
             <Dialog
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="draggable-dialog-title"
             >
                 <DialogTitle id="draggable-dialog-title">
-                    Add Object
+                    Edit Model
                 </DialogTitle>
                 <DialogContent className={classes.dialog}>
                     <TextField
@@ -108,8 +142,16 @@ export default function ObjectAdd() {
                     <TextField
                         className={classes.textField}
                         name="createdBy"
-                        label="CreatedBy"
+                        label="Created By"
                         value={createdBy}
+                        onChange={handleChange}
+                        disabled
+                    />
+                    <TextField
+                        className={classes.textField}
+                        name="updatedBy"
+                        label="Updated By"
+                        value={updatedBy ? updatedBy : ""}
                         onChange={handleChange}
                     />
                 </DialogContent>
@@ -126,7 +168,7 @@ export default function ObjectAdd() {
                         variant="contained"
                         color="primary"
                     >
-                        Add
+                        Update
                     </Button>
                 </DialogActions>
             </Dialog>
