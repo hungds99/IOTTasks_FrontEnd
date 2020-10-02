@@ -56,7 +56,19 @@ export default function ObjectAdd() {
     };
 
     const handleSubmit = () => {
-        dispatch(addObject(object));
+        dispatch(
+            addObject({
+                name: name,
+                location: {
+                    lng: parseFloat(lng),
+                    lat: parseFloat(lat)
+                },
+                description: description,
+                createdBy: createdBy
+            })
+        );
+        setObject(initObject);
+        handleClose();
     };
 
     return (

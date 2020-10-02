@@ -25,6 +25,7 @@ export default function(state = initialObject, actions) {
                 object: actions.payload
             };
         case ADD_OBJECT:
+            state.objects.pop();
             return {
                 ...state,
                 objects: [actions.payload, ...state.objects]

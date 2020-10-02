@@ -51,9 +51,9 @@ export default function Navbar() {
                     <Button color="inherit" component={Link} to="/objects">
                         Object
                     </Button>
-                    <Button color="inherit" component={Link} to="/places">
+                    {/* <Button color="inherit" component={Link} to="/places">
                         Place
-                    </Button>
+                    </Button> */}
                 </Grid>
             </Toolbar>
         </AppBar>

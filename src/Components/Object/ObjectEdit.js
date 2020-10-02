@@ -1,5 +1,5 @@
 // React
-import React, { Fragment, useState} from "react";
+import React, { Fragment, useState } from "react";
 
 // Material
 import { makeStyles } from "@material-ui/core/styles";
@@ -38,7 +38,7 @@ export default function ObjectEdit(props) {
 
     const [object, setObject] = useState(props.object);
 
-    const { name, location, description, createdBy, updatedBy } = object;
+    const { _id, name, location, description, createdBy, updatedBy } = object;
     const { lng, lat } = location;
 
     const handleClickOpen = () => {
@@ -51,12 +51,22 @@ export default function ObjectEdit(props) {
 
     const handleChange = event => {
         let { name, value } = event.target;
-        setObject(state => ({ ...state.object, [name]: value }));
+        setObject(state => ({ ...state, [name]: value }));
     };
 
-    const handleSubmit = event => {
-        event.preventDefault();
-        dispatch(editObject({ ...object }));
+    const handleSubmit = () => {
+        dispatch(
+            editObject({
+                _id: _id,
+                name: name,
+                location: {
+                    lng: parseFloat(lng),
+                    lat: parseFloat(lat)
+                },
+                description: description,
+                createdBy: createdBy
+            })
+        );
         handleClose();
     };
 
