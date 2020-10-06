@@ -103,7 +103,7 @@ export default function Objects() {
         dispatch(getObjects(page));
     }, [page, dispatch]);
 
-    const changePage = (event, value) => {
+    const changePage = value => {
         setPage(value);
     };
 

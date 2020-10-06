@@ -40,9 +40,9 @@ export default function(state = initialObject, actions) {
                 object: {}
             };
         case REMOVE_OBJECT:
-            let indexRemove = state.objects.findIndex(
-                object => object._id === actions.payload.objectId
-            );
+            let indexRemove = state.objects.findIndex(object => {
+                return object._id === actions.payload;
+            });
             state.objects.splice(indexRemove, 1);
             return {
                 objects: [...state.objects],

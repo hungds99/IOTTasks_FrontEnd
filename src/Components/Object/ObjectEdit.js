@@ -38,7 +38,9 @@ export default function ObjectEdit(props) {
 
     const [object, setObject] = useState(props.object);
 
-    const { _id, name, location, description, createdBy, updatedBy } = object;
+    const [location, setLocation] = useState(props.object.location);
+
+    const { _id, name, description, createdBy, updatedBy } = object;
     const { lng, lat } = location;
 
     const handleClickOpen = () => {
@@ -51,7 +53,12 @@ export default function ObjectEdit(props) {
 
     const handleChange = event => {
         let { name, value } = event.target;
-        setObject(state => ({ ...state, [name]: value }));
+
+        if (name === "lng" || name === "lat") {
+            setLocation(state => ({ ...state, [name]: parseFloat(value) }));
+        } else {
+            setObject(state => ({ ...state, [name]: value }));
+        }
     };
 
     const handleSubmit = () => {
@@ -59,10 +66,7 @@ export default function ObjectEdit(props) {
             editObject({
                 _id: _id,
                 name: name,
-                location: {
-                    lng: parseFloat(lng),
-                    lat: parseFloat(lat)
-                },
+                location: location,
                 description: description,
                 createdBy: createdBy
             })

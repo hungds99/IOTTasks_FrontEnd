@@ -1,6 +1,8 @@
 // React
 import React from "react";
 
+import dayjs from "dayjs";
+
 // Material
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
@@ -24,11 +26,18 @@ export default function Object(props) {
         <TableRow>
             <TableCell align="center">{props.count + 1}</TableCell>
             <TableCell align="center">{name}</TableCell>
-            <TableCell align="center">{location.lat}</TableCell>
+            <TableCell align="center">
+                <li>Longitude: {location.lng}</li>
+                <li>Latitude: {location.lat}</li>
+            </TableCell>
             <TableCell align="center">{description}</TableCell>
             <TableCell align="center">{createdBy}</TableCell>
-            <TableCell align="center">{createdAt}</TableCell>
-            <TableCell align="center">{updatedAt}</TableCell>
+            <TableCell align="center">
+                {dayjs(createdAt).format("MM/DD/YYYY h:mm:ss A")}
+            </TableCell>
+            <TableCell align="center">
+                {dayjs(updatedAt).format("MM/DD/YYYY h:mm:ss A")}
+            </TableCell>
             <TableCell align="center">
                 <ObjectEdit objectId={_id} object={props.object} />
                 <ObjectRemove object={props.object} />

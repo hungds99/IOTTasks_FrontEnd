@@ -23,6 +23,7 @@ export default function ObjectRemove(props) {
     const { _id, name } = props.object;
 
     const handleOpen = () => {
+        console.log(_id, name);
         setOpen(true);
     };
 
@@ -30,7 +31,7 @@ export default function ObjectRemove(props) {
         setOpen(false);
     };
 
-    const handleDelete = event => {
+    const handleDelete = () => {
         dispatch(removeObject(_id));
         handleClose();
     };
